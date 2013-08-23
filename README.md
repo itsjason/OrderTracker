@@ -16,5 +16,6 @@ Here's the plan:
 - Display a list of orders, or line items, or something.
 - Each line will have an item name, quantity, price each and line total
 - Maybe there is a details view with more things? Not sure what was meant by this
+  - We want the details view so we can show how Backbone and Angular handle a Master/Detail layout
 - Then we will total up the lines at the bottom, apply tax and/or discounts
 - Did we also want a list of orders / invoices? Is that what the master / detail thing was about?
