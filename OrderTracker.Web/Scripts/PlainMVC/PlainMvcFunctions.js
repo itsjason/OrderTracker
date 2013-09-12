@@ -5,7 +5,7 @@
 
     if (rateValue !== '' && quantityValue !== '') {
         total = Number(rateValue) * Number(quantityValue);
-        $('#LineTotal_' + id).html(accounting.formatMoney(total));
+        $('#LineTotal_' + id).html(numeral(total).format('$0,0.00'));
 
         calculateInvoiceTotal();
     }
@@ -24,7 +24,7 @@ function calculateInvoiceTotal() {
         total += (quantity * rate);
     });    
 
-    $('#InvoiceTotal').html(accounting.formatMoney(total));
+    $('#InvoiceTotal').html(numeral(total).format('$0,0.00'));
 }
 
 function getTotals(className) {

@@ -1,5 +1,10 @@
 ﻿@model OrderTracker.Web.Models.Invoice
-<script src="~/Scripts/PlainMVC/PlainMvcFunctions.js"></script>
+
+@section PageJs
+{
+    <script src="~/Scripts/Vendor/numeral.min.js"></script>
+    <script src="~/Scripts/PlainMVC/PlainMvcFunctions.js"></script>
+}
 
 <div class="page-header">    
     <h1>Invoice Details</h1>
