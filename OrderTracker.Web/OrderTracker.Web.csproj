@@ -175,7 +175,6 @@
     <Content Include="Scripts\angularjs\test\scripts\test.bat" />
     <Content Include="Scripts\angularjs\test\scripts\test.sh" />
     <Content Include="Scripts\angularjs\test\scripts\watchr.rb" />
-    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\angularjs\app\app.js" />
     <Content Include="Scripts\angularjs\app\controllers\InvoiceController.js" />
     <Content Include="Scripts\angularjs\app\controllers\InvoiceDetailsController.js" />
@@ -190,10 +189,8 @@
     <Content Include="Scripts\angularjs\test\unit-SampleFromSeed\directivesSpec.js" />
     <Content Include="Scripts\angularjs\test\unit-SampleFromSeed\filtersSpec.js" />
     <Content Include="Scripts\angularjs\test\unit-SampleFromSeed\servicesSpec.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\Vendor\bootstrap.min.js" />
+    <Content Include="Scripts\Vendor\jquery-1.9.1.min.js" />
     <Content Include="Scripts\moment+langs.js" />
     <Content Include="Scripts\moment+langs.min.js" />
     <Content Include="Scripts\moment.js" />
@@ -208,7 +205,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />

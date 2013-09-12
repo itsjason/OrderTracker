@@ -8,7 +8,7 @@
         <meta http-equiv="expires" content="Thu, 19 Oct 2000 00:00:00 GMT" />
         <title>DUG AngularJS / Backbone</title>    
         <meta name="viewport" content="width=device-width" />
-        
+        <link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />        
     </head>
     <body>
         @Html.Partial("_TitleBar")
@@ -19,9 +19,8 @@
             @RenderBody()
         </div>
         
-        <script src="~/Scripts/jquery-1.9.1.js"></script>
-        <link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />        
-        <script src="~/Scripts/bootstrap.js"></script>        
+        <script src="~/Scripts/Vendor/jquery-1.9.1.min.js"></script>
+        <script src="~/Scripts/Vendor/bootstrap.min.js"></script>        
         @RenderSection("PageJs", false)
     </body>
 </html>
