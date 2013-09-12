@@ -1,0 +1,78 @@
+﻿@model OrderTracker.Web.Models.Invoice
+<script src="~/Scripts/PlainMVC/PlainMvcFunctions.js"></script>
+
+<div class="page-header">    
+    <h1>Invoice Details</h1>
+    <span class="pull-right">
+        <button type="button" class="btn btn-primary" style="margin-top: -60px;" onclick="document.location='@Url.Action("Index")'">Return To Invoice List</button>    
+    </span>
+</div>
+
+<div class="alert alert-info " id="notificationMessage" style="display: none"></div>
+
+<form class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(_ => _.CustomerName, new Dictionary<string, object> { {"class", "col-lg-2 control-label"} })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(_ => _.CustomerName, new Dictionary<string, object> {{ "class", "form-control" }})
+        </div>        
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(_ => _.InvoiceDate, new Dictionary<string, object> { {"class", "col-lg-2 control-label"} })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(_ => _.InvoiceDate, new Dictionary<string, object> {{ "class", "form-control" }})
+        </div>        
+    </div>
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+            <button type="button" class="btn btn-success" onclick="saveInvoice(@Model.Id)">Save</button>
+        </div>
+    </div>
+</form>
+
+@if (Model.Id > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Rate</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lineItem in Model.LineItems)
+            {
+                <tr>
+                    <td>@Html.TextBoxFor(_ => lineItem.Task, new Dictionary<string, object> { { "id", "Task_" + lineItem.Id } })</td>
+                    <td>@Html.TextBoxFor(_ => lineItem.Rate, new Dictionary<string, object> { { "id", "Rate_" + lineItem.Id }, { "onkeyup", "calculateTotal(" + lineItem.Id + ")" }, { "class", "rate" } })</td>
+                    <td>@Html.TextBoxFor(_ => lineItem.Quantity, new Dictionary<string, object> { { "id", "Quantity_" + lineItem.Id}, { "onkeyup", "calculateTotal(" + lineItem.Id + ")" }, { "class", "quantity" } })</td>
+                    <td><span id="LineTotal_@lineItem.Id">@((lineItem.Rate * lineItem.Quantity).ToString("C"))</span></td>
+                    <td>
+                        <span class="pull-right">
+                            <button type="button" class="btn btn-success" onclick="updateLineItem('@Model.Id','@lineItem.Id')">Update</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-success" onclick="document.location='@Url.Action("DeleteLineItem", new { id = Model.Id, lineItemId = lineItem.Id } )'">Delete</button>
+                        </span>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td><input type="text" id="Task_Add"/></td>
+                <td><input type="text" id="Rate_Add" class="rate" onkeyup="calculateTotal('Add')"/></td>
+                <td><input type="text" id="Quantity_Add" class="quantity" onkeyup="calculateTotal('Add')"/></td>
+                <td><span id="LineTotal_Add"></span></td>
+                <td>
+                    <span class="pull-right">
+                        <button type="button" class="btn btn-success" onclick="addLineItem('@Model.Id')">Add</button>
+                    </span>
+                </td>
+            </tr>
+            <tr>                
+                <td colspan="3"><span class="pull-right" style="font-weight: bold">Invoice Total:</span></td>
+                <td colspan="2"><span id="InvoiceTotal">@(Model.LineItems.Sum(_ => _.Quantity * _.Rate).ToString("C"))</span></td>                
+            </tr>
+        </tbody>
+    </table>
+}
