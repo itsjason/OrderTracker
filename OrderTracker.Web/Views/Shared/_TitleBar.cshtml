@@ -1,0 +1,27 @@
+﻿<nav class="navbar navbar-default navbar-fixed-top">
+    <a class="navbar-brand" href="/Home">DUG Angular / Backbone</a>
+    
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="/Home" id="HomeLink">Plain Mvc Sample</a></li>
+            <li><a href="/Angular" id="AngularLink">Angular Sample</a></li>
+            <li><a href="/Backbone" id="BackboneLink">Backbone Sample</a></li>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    (function() {
+        var selectedNavBarItem;
+
+        if (document.location.href.indexOf('Angular') > 0) {
+            selectedNavBarItem = $('#AngularLink');
+        } else if (document.location.href.indexOf('Backbone') > 0) {
+            selectedNavBarItem = $('#BackboneLink');
+        } else {
+            selectedNavBarItem = $('#HomeLink');
+        }
+        
+        selectedNavBarItem.parent().addClass('active');
+    }).call(this);    
+</script>

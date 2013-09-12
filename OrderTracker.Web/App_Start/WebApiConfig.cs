@@ -10,10 +10,14 @@ namespace OrderTracker.Web
         public static void Register(HttpConfiguration config)
         {
             config.Routes.MapHttpRoute(
+                name: "LineItem",
+                routeTemplate: "api/Invoices/{invoiceId}/LineItems/{id}",
+                defaults: new { controller = "LineItems", id = RouteParameter.Optional });
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                defaults: new { id = RouteParameter.Optional });
         }
     }
 }

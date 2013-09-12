@@ -1,0 +1,35 @@
+﻿@model IList<OrderTracker.Web.Models.Invoice>
+
+<div class="page-header">    
+    <h1>Invoices</h1>    
+    <span class="pull-right">
+        <button type="button" class="btn btn-success" style="margin-top: -60px;" onclick="document.location='@Url.Action("AddInvoice")'">Add Invoice</button>
+    </span>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Invoice Date</th>
+            <th>Customer Name</th>
+            <th>Invoice Total</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+            <tr>
+                <td>@invoice.InvoiceDate.ToShortDateString()</td>
+                <td>@invoice.CustomerName</td>
+                <td>@invoice.LineItems.Sum(_ => _.Quantity * _.Rate).ToString("C")</td>
+                <td>
+                    <span class="pull-right">
+                        <button type="button" class="btn btn-success" onclick="document.location='@Url.Action("InvoiceDetail", new { id = invoice.Id })'">Edit</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success" onclick="document.location='@Url.Action("DeleteInvoice", new { id = invoice.Id })'">Delete</button>
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
