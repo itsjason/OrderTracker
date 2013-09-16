@@ -1,76 +1,79 @@
-﻿@model OrderTracker.Web.Models.Invoice
-<div class="page-header">    
-    <h1>Invoice Details</h1>
-    <span class="pull-right">
-        <button type="button" class="btn btn-primary" style="margin-top: -60px;" onclick="document.location='@Url.Action("Index")'">Return To Invoice List</button>    
-    </span>
-</div>
-
-<div class="alert alert-info " id="notificationMessage" style="display: none"></div>
-
-<form class="form-horizontal">
-    <div class="form-group">
-        <label for="CustomerName" class="col-lg-2 control-label">Customer Name</label>        
-        <div class="col-lg-10">
-            <input type="text" class="form-control" id="CustomerName" value="@Model.CustomerName"/>            
-        </div>        
+﻿<div ng-controller="invoiceDetailsController">
+    
+    <div class="page-header">    
+        <h1>Invoice Details</h1>
+        <span class="pull-right">
+            @*<button type="button" class="btn btn-primary" style="margin-top: -60px;" onclick="document.location='@Url.Action("Index")'">Return To Invoice List</button>*@    
+        </span>
     </div>
-    <div class="form-group">
-        <label for="InvoiceDate" class="col-lg-2 control-label">Invoice Date</label>        
-        <div class="col-lg-10">
-            <input type="text" class="form-control" id="InvoiceDate" value="@Model.InvoiceDate"/>            
-        </div>        
-    </div>
-    <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
-            <button type="button" class="btn btn-success">Save</button>
+
+    <div class="alert alert-info " id="notificationMessage" style="display: none"></div>
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="CustomerName" class="col-lg-2 control-label">Customer Name</label>        
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="CustomerName" ng-model="InvoiceDetail.CustomerName" />            
+            </div>        
         </div>
-    </div>
-</form>
-
-@if (Model.Id > 0)
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Task</th>
-                <th>Rate</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var lineItem in Model.LineItems)
-            {
+        <div class="form-group">
+            <label for="InvoiceDate" class="col-lg-2 control-label">Invoice Date</label>        
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="InvoiceDate" ng-model="InvoiceDetail.InvoiceDate" placeholder="MM/DD/YYYY"/>            
+            </div>        
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <button type="button" class="btn btn-success" ng-click="addInvoice(InvoiceDetail)">Save</button>
+            </div>
+        </div>
+    </form>
+    <div ng-show="invoiceId>0">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td><input type="text" value="@lineItem.Task"/></td>
-                    <td><input type="text" value="@lineItem.Rate"/></td>
-                    <td><input type="text" value="@lineItem.Quantity"/></td>
-                    <td><span>@((lineItem.Rate * lineItem.Quantity).ToString("C"))</span></td>
+                    <th>Task</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr ng-repeat="lineItem in InvoiceDetail.LineItems">
+                    <td><input type="text" ng-model="lineItem.Task"/></td>
+                    <td><input type="text" ng-model="lineItem.Rate" /></td>
+                    <td><input type="text" ng-model="lineItem.Quantity"/></td>
+                    <td><span> {{ (lineItem.Rate * lineItem.Quantity) | currency:'$'}}</span></td>
                     <td>
                         <span class="pull-right">
-                            <button type="button" class="btn btn-success">Update</button>&nbsp;&nbsp;
-                            <button type="button" class="btn btn-success">Delete</button>
+                            <button type="button" class="btn btn-success" ng-click="editLineItem(InvoiceDetail.Id, lineItem)">Update</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-success" ng-click="deleteLineItem(InvoiceDetail.Id, lineItem.Id)">Delete</button>
                         </span>
                     </td>
                 </tr>
-            }
-            <tr>
-                <td><input type="text" id="Task_Add"/></td>
-                <td><input type="text" id="Rate_Add" class="rate"/></td>
-                <td><input type="text" id="Quantity_Add" class="quantity"/></td>
-                <td><span id="LineTotal_Add"></span></td>
-                <td>
-                    <span class="pull-right">
-                        <button type="button" class="btn btn-success">Add</button>
-                    </span>
-                </td>
-            </tr>
-            <tr>                
-                <td colspan="3"><span class="pull-right" style="font-weight: bold">Invoice Total:</span></td>
-                <td colspan="2"><span id="InvoiceTotal">@(Model.LineItems.Sum(_ => _.Quantity * _.Rate).ToString("C"))</span></td>                
-            </tr>
-        </tbody>
-    </table>
-}
+                
+                <tr>
+                    <td><input type="text" id="Task_Add" ng-model="lineItem.Task"/></td>
+                    <td><input type="text" id="Rate_Add" class="rate" ng-model="lineItem.Rate"/></td>
+                    <td><input type="text" id="Quantity_Add" class="quantity" ng-model="lineItem.Quantity"/></td>
+                    <td><span id="LineTotal_Add">{{ (lineItem.Rate * lineItem.Quantity) | currency:'$'}}</span></td>
+                    <td>
+                        <span class="pull-right">
+                            <button type="button" class="btn btn-success" ng-click="addLineItem(invoiceId,lineItem)">Add</button>
+                        </span>
+                    </td>
+                </tr>
+                <tr>                
+                    <td colspan="3"><span class="pull-right" style="font-weight: bold">Invoice Total:</span></td>
+                    <td colspan="2"><span id="InvoiceTotal">{{getLineItemsTotals() | currency:'$'}}</span></td>              
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="alert alert-info "  style="margin-top: 40px">
+        <span>{{InvoiceDetailUpdateNotification}}</span>
+    </div>
+</div>

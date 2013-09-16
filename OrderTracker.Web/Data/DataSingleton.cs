@@ -79,7 +79,7 @@ namespace OrderTracker.Web.Data
         {
             lock (Lock)
             {
-                var invoice = Invoices.First(_ => _.Id == lineItem.Id);
+                var invoice = Invoices.First(_ => _.Id == lineItem.InvoiceId);
                 var index = invoice.LineItems.FindIndex(_ => _.Id == lineItem.Id);
 
                 invoice.LineItems[index] = lineItem;
@@ -115,7 +115,7 @@ namespace OrderTracker.Web.Data
 
         private static int GetNextLineItemId()
         {
-            return Invoices.Select(invoice => invoice.LineItems.Max(_ => _.Id)).Concat(new[] { 0 }).Max() + 1;
+            return Invoices.Select(invoice => !invoice.LineItems.Any() ? 0: invoice.LineItems.Max(_ => _.Id)).Concat(new[] { 0 }).Max() + 1;
         }       
 
         private static List<Invoice> GetSeedData()

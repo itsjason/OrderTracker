@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Web.Http;
 using OrderTracker.Web.Data;
 using OrderTracker.Web.Models;
@@ -14,10 +15,10 @@ namespace OrderTracker.Web.Controllers
 
         public Invoice Get(int id)
         {
-            return DataSingleton.GetInvoiceById(id);
+            return (id > 0) ? DataSingleton.GetInvoiceById(id) : new Invoice();
         }
 
-        public Invoice Post([FromBody] Invoice invoice)
+        public Invoice Post(Invoice invoice)
         {
             return DataSingleton.AddInvoice(invoice);
         }
