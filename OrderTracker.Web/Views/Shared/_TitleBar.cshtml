@@ -11,7 +11,7 @@
 </nav>
 
 <script>
-    (function() {
+    window.addEventListener('load', function() {
         var selectedNavBarItem;
 
         if (document.location.href.indexOf('Angular') > 0) {
@@ -21,7 +21,7 @@
         } else {
             selectedNavBarItem = $('#HomeLink');
         }
-        
+
         selectedNavBarItem.parent().addClass('active');
-    }).call(this);    
+    }, false);
 </script>

@@ -1,5 +1,27 @@
 ﻿@model IList<OrderTracker.Web.Models.Invoice>
 
+@section PageJs
+{
+    <script src="~/Scripts/Vendor/underscore.min.js"></script>
+    <script src="~/Scripts/Vendor/backbone.min.js"></script>
+    <script src="~/Scripts/Vendor/numeral.min.js"></script>
+    <script src="~/Scripts/Vendor/moment.min.js"></script>
+    <script src="~/Scripts/Backbone/App.js"></script>
+    <script src="~/Scripts/Backbone/Models/Invoice.js"></script>
+    <script src="~/Scripts/Backbone/Models/LineItem.js"></script>
+    <script src="~/Scripts/Backbone/Collections/InvoiceCollection.js"></script>
+    <script src="~/Scripts/Backbone/Collections/LineItemCollection.js"></script>
+    <script src="~/Scripts/Backbone/Views/InvoiceCollectionView.js"></script>
+    <script src="~/Scripts/Backbone/Views/InvoiceRowView.js"></script>
+    <script>
+        (function() {
+            var collection = new App.collections.InvoiceCollection();
+            new App.views.InvoiceCollectionView({ collection: collection });
+            collection.fetch({ reset: true });
+        }).call(this);
+    </script>
+}
+
 <div class="page-header">    
     <h1>Invoices</h1>    
     <span class="pull-right">
@@ -7,7 +29,7 @@
     </span>
 </div>
 
-<table class="table table-striped">
+<table id="invoices-table" class="table table-striped">
     <thead>
         <tr>
             <th>Invoice Date</th>
@@ -17,19 +39,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var invoice in Model)
-        {
-            <tr>
-                <td>@invoice.InvoiceDate.ToShortDateString()</td>
-                <td>@invoice.CustomerName</td>
-                <td>@invoice.LineItems.Sum(_ => _.Quantity * _.Rate).ToString("C")</td>
-                <td>
-                    <span class="pull-right">
-                        <button type="button" class="btn btn-success" onclick="document.location='@Url.Action("InvoiceDetail", new { id = invoice.Id })'">Edit</button>&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success">Delete</button>
-                    </span>
-                </td>
-            </tr>
-        }
     </tbody>
 </table>
+
+<script id="invoice-row-template" type="text/template">
+    <td><%= moment(InvoiceDate).format('MM/DD/YYYY') %></td>
+    <td><%= CustomerName %></td>
+    <td><%= numeral(Total).format('$0,0') %></td>
+    <td>
+        <span class="pull-right">
+            <button type="button" class="btn btn-success">Edit</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-success">Delete</button>
+        </span>
+    </td>
+</script>
