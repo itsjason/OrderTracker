@@ -13,34 +13,36 @@
     <script src="~/Scripts/Backbone/Collections/LineItemCollection.js"></script>
     <script src="~/Scripts/Backbone/Views/InvoiceCollectionView.js"></script>
     <script src="~/Scripts/Backbone/Views/InvoiceRowView.js"></script>
+    <script src="~/Scripts/Backbone/Views/InvoiceDetailView.js"></script>
     <script>
         (function() {
-            var collection = new App.collections.InvoiceCollection();
-            new App.views.InvoiceCollectionView({ collection: collection });
-            collection.fetch({ reset: true });
+            router = new App.Router(); 
+            console.log(Backbone.history.start({ pushState: true, root: '/Backbone' }));
         }).call(this);
     </script>
 }
 
-<div class="page-header">    
-    <h1>Invoices</h1>    
-    <span class="pull-right">
-        <button type="button" class="btn btn-success" style="margin-top: -60px;">Add Invoice</button>
-    </span>
-</div>
+<script id="invoice-collection-template" type="text/template">
+    <div class="page-header">    
+        <h1>Invoices</h1>    
+        <span class="pull-right">
+            <button type="button" class="btn btn-success" style="margin-top: -60px;">Add Invoice</button>
+        </span>
+    </div>
 
-<table id="invoices-table" class="table table-striped">
-    <thead>
-        <tr>
-            <th>Invoice Date</th>
-            <th>Customer Name</th>
-            <th>Invoice Total</th>
-            <th>&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Invoice Date</th>
+                <th>Customer Name</th>
+                <th>Invoice Total</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</script>
 
 <script id="invoice-row-template" type="text/template">
     <td><%= moment(InvoiceDate).format('MM/DD/YYYY') %></td>
@@ -48,7 +50,69 @@
     <td><%= numeral(Total).format('$0,0') %></td>
     <td>
         <span class="pull-right">
-            <button type="button" class="btn btn-success">Edit</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-success edit">Edit</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-success">Delete</button>
+        </span>
+    </td>
+</script>
+
+<script id="invoice-detail-template" type="text/template">
+    <div class="page-header">    
+        <h1>Invoice Details</h1>
+        <span class="pull-right">
+            <button type="button" class="btn btn-primary invoice-list" style="margin-top: -60px;">Return To Invoice List</button>    
+        </span>
+    </div>
+
+    <div class="alert alert-info " id="notificationMessage" style="display: none"></div>
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="CustomerName" class="col-lg-2 control-label">Customer Name</label>        
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="CustomerName" value="<%= CustomerName %>" />            
+            </div>        
+        </div>
+        <div class="form-group">
+            <label for="InvoiceDate" class="col-lg-2 control-label">Invoice Date</label>        
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="InvoiceDate" value="<%= moment(InvoiceDate).format('MM/DD/YYYY') %>"/>            
+            </div>        
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <button type="button" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Rate</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>                
+                <td colspan="3"><span class="pull-right" style="font-weight: bold">Invoice Total:</span></td>
+                <td colspan="2"><span id="InvoiceTotal"><%= Total %></span></td>                
+            </tr>
+        </tbody>
+    </table>
+</script>
+
+<script id="line-item-template" type="text/template">
+    <td><input type="text" value="<%= Task %>"/></td>
+    <td><input type="text" value="<%= Rate %>"/></td>
+    <td><input type="text" value="<%= Quantity %>"/></td>
+    <td><span><%= Total %></span></td>
+    <td>
+        <span class="pull-right">
+            <button type="button" class="btn btn-success">Update</button>&nbsp;&nbsp;
             <button type="button" class="btn btn-success">Delete</button>
         </span>
     </td>

@@ -1,15 +1,32 @@
-﻿App.views.InvoiceCollectionView = Backbone.View.extend({  
-  initialize: function() {
-    this.listenTo(this.collection, 'reset', this.renderAll);
+﻿App.views.InvoiceCollectionView = Backbone.View.extend({
+  initialize: function () {
+    this.invoiceViews = [];
+    this.listenTo(this.collection, 'reset', this.renderInvoices);
   },
 
-  el: '#invoices-table',
+  template: $('#invoice-collection-template').html(),
 
-  renderAll: function () {
-    var invoices = [];
-    this.collection.each(function (model) {
-      invoices.push(new App.views.InvoiceRowView({ model: model }).render().el);
-    });
-    this.$('tbody').html(invoices);
+  render: function () {
+    this.$el.html(this.template);
+    this.renderInvoices();
+    return this;
+  },
+
+  renderInvoices: function () {
+    this.invoiceViews = [];
+    var invoiceEls = [];
+    this.collection.each(function(model) {
+      var invoiceView = new App.views.InvoiceRowView({ model: model });
+      this.invoiceViews.push(invoiceView);
+      invoiceEls.push(invoiceView.render().el);
+    }, this);
+    this.$('tbody').html(invoiceEls);
+  },
+  
+  close: function() {
+    for (var i = 0, len = this.invoiceViews.length; i < len; i++) {
+      this.invoiceViews[i].remove();
+    }
+    this.invoiceViews = [];
   }
 });

@@ -7,12 +7,7 @@ namespace OrderTracker.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View(DataSingleton.GetAllInvoices());
-        }
-
-        public ActionResult InvoiceDetail(int id)
-        {
-            return View(DataSingleton.GetInvoiceById(id)); 
+            return View();
         }
     }
 }
