@@ -1,71 +1,68 @@
-﻿function invoiceDetailsController($scope, $window, invoiceProcessor) {
+﻿angular.module('orderTrackerApp')
+    .controller("InvoiceDetailsCtrl", function($scope, $window, $routeParams, invoiceProcessor) {
 
-    $scope.InvoiceDetailUpdateNotification = '';
-    $scope.apiBaseUrl = '/api/Invoices';
-    $scope.apiLineItemBaseUrl = '/api/LineItems/';
-    $scope.invoiceId = invoiceProcessor.getUrlParameter('Id');
+        $scope.InvoiceDetailUpdateNotification = '';
+        $scope.apiBaseUrl = '/api/Invoices';
+        $scope.apiLineItemBaseUrl = '/api/LineItems/';
+        $scope.invoiceId = $routeParams.id;
 
-    $scope.InvoiceDetail = invoiceProcessor.getInvoiceById($scope.invoiceId, $scope.apiBaseUrl + "/");
-    $scope.InvoiceDetail.then(
-        function (output) {
-            $scope.InvoiceDetail = output;
+        $scope.InvoiceDetail = invoiceProcessor.getInvoiceById($scope.invoiceId, $scope.apiBaseUrl + "/");
+        $scope.InvoiceDetail.then(
+            function(output) {
+                $scope.InvoiceDetail = output;
 
-            if ($scope.InvoiceDetail.Id <= 0) {
-                $scope.InvoiceDetail.InvoiceDate = '';
+                if ($scope.InvoiceDetail.Id <= 0) {
+                    $scope.InvoiceDetail.InvoiceDate = '';
+                }
+            },
+            function(response) {
+
             }
-        },
-        function (response) {
-            
-        }
-    );
+        );
 
-    $scope.addInvoice = function (invoice) {
-        if (invoice.Id <= 0) {
-            invoiceProcessor.addInvoice(invoice, $scope.apiBaseUrl + "/");
+        $scope.addInvoice = function(invoice) {
+            if (invoice.Id <= 0) {
+                invoiceProcessor.addInvoice(invoice, $scope.apiBaseUrl + "/");
 
-        } else {
-            invoiceProcessor.editInvoice(invoice, $scope.apiBaseUrl + "/");
-            
-            $scope.InvoiceDetailUpdateNotification = 'Invoice Update Succesful';
-        }
-    };
-      
-    $scope.getLineItemsTotals = function () {
+            } else {
+                invoice.$save();
+                //invoiceProcessor.editInvoice(invoice, $scope.apiBaseUrl + "/");
 
-        var total = 0;
-
-        if ($scope.InvoiceDetail.LineItems) {
-            for (var i = 0; i < $scope.InvoiceDetail.LineItems.length; i++) {
-                var lineItem = $scope.InvoiceDetail.LineItems[i];
-
-                total += lineItem.Quantity * lineItem.Rate;
+                $scope.InvoiceDetailUpdateNotification = 'Invoice Update Succesful';
             }
-        }
+        };
 
-        return total;
-    };
+        $scope.getLineItemsTotals = function() {
 
+            var total = 0;
 
-    $scope.addLineItem = function(invoiceId, lineItem) {
-        invoiceProcessor.addLineItem(invoiceId, lineItem, $scope.apiLineItemBaseUrl);
-        
-        $window.location.reload();
-    };
-    
-    $scope.editLineItem = function (invoiceId, lineItem) {
-        invoiceProcessor.editLineItem(invoiceId, lineItem.Id, lineItem, $scope.apiLineItemBaseUrl);
+            if ($scope.InvoiceDetail.LineItems) {
+                for (var i = 0; i < $scope.InvoiceDetail.LineItems.length; i++) {
+                    var lineItem = $scope.InvoiceDetail.LineItems[i];
 
-        $scope.InvoiceDetailUpdateNotification = 'LineItem Update Succesful';
-    };
-    
-    $scope.deleteLineItem = function (invoiceId, id) {
-        invoiceProcessor.deleteLineItem(invoiceId, id, $scope.apiLineItemBaseUrl);
+                    total += lineItem.Quantity * lineItem.Rate;
+                }
+            }
 
-        $window.location.reload();
-    };
-}
-
-orderTrackerApp.controller("invoiceDetailsController", invoiceDetailsController);
+            return total;
+        };
 
 
+        $scope.addLineItem = function(invoiceId, lineItem) {
+            invoiceProcessor.addLineItem(invoiceId, lineItem, $scope.apiLineItemBaseUrl);
 
+            $window.location.reload();
+        };
+
+        $scope.editLineItem = function(invoiceId, lineItem) {
+            invoiceProcessor.editLineItem(invoiceId, lineItem.Id, lineItem, $scope.apiLineItemBaseUrl);
+
+            $scope.InvoiceDetailUpdateNotification = 'LineItem Update Succesful';
+        };
+
+        $scope.deleteLineItem = function(invoiceId, id) {
+            invoiceProcessor.deleteLineItem(invoiceId, id, $scope.apiLineItemBaseUrl);
+
+            $window.location.reload();
+        };
+    });

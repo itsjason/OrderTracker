@@ -1,35 +1,15 @@
-﻿
-<div ng-controller="invoiceController">
-    
-    <div class="page-header">    
-        <h1>Invoices</h1>    
-        <span class="pull-right">
-            <button type="button" class="btn btn-success" style="margin-top: -60px;" onclick="document.location='/Angular/InvoiceDetail?Id=0'">Add Invoice</button>
-        </span>
-    </div>
+﻿<div data-ng-app="orderTrackerApp">
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Invoice Date</th>
-                <th>Customer Name</th>
-                <th>Invoice Total</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="invoice in Invoices">
-                <td>{{invoice.InvoiceDate | date : 'MM/dd/yyyy'}}</td>
-                <td>{{invoice.CustomerName}}</td>
-                <td>{{getLineItemsTotals(invoice) | currency:'$'}}</td>
+    <ng-view></ng-view>
 
-                <td>
-                    <span class="pull-right">
-                        <button type="button" class="btn btn-success" onclick="document.location='/Angular/InvoiceDetail?Id={{invoice.Id}}'">Edit</button>&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success" ng-click="deleteInvoice(invoice.Id)">Delete</button>
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </div>
+
+<script src="~/Scripts/angularjs/lib/angular.min.js"></script>
+<script src="~/Scripts/angularjs/lib/angular-resource.min.js"></script>
+
+<script src="~/Scripts/angularjs/app/app.js"></script>
+
+<script src="~/Scripts/angularjs/app/controllers/InvoiceController.js"></script>
+<script src="~/Scripts/angularjs/app/controllers/InvoiceDetailsController.js"></script>
+<script src="~/Scripts/angularjs/app/services/InvoiceProcessor.js"></script>
+<script src="~/Scripts/angularjs/app/filters/moment.js"></script>

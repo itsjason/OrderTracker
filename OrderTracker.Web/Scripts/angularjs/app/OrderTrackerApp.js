@@ -1,1 +1,0 @@
-﻿var orderTrackerApp = angular.module('orderTrackerApp', ['ngResource']);

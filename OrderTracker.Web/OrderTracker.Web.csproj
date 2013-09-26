@@ -157,12 +157,14 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\angularjs\app\filters\moment.js" />
+    <Content Include="Scripts\angularjs\app\templates\invoiceDetail.html" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\accounting.js" />
     <Content Include="Scripts\accounting.min.js" />
+    <Content Include="Scripts\angularjs\app\app.js" />
     <Content Include="Scripts\angularjs\app\controllers\InvoiceController.js" />
     <Content Include="Scripts\angularjs\app\controllers\InvoiceDetailsController.js" />
-    <Content Include="Scripts\angularjs\app\OrderTrackerApp.js" />
     <Content Include="Scripts\angularjs\app\services\InvoiceProcessor.js" />
     <Content Include="Scripts\angularjs\lib\angular-resource.min.js" />
     <Content Include="Scripts\angularjs\lib\angular.min.js" />
@@ -170,6 +172,10 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\moment+langs.js" />
+    <Content Include="Scripts\moment+langs.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\PlainMVC\PlainMvcFunctions.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -188,7 +194,7 @@
     <Content Include="Views\Backbone\Index.cshtml" />
     <Content Include="Views\Backbone\InvoiceDetail.cshtml" />
     <Content Include="Views\Angular\Index.cshtml" />
-    <Content Include="Views\Angular\InvoiceDetail.cshtml" />
+    <Content Include="Scripts\angularjs\app\templates\invoice.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,38 @@
+﻿<div>
+
+    <div class="page-header">
+        <h1>Invoices</h1>
+        <span class="pull-right">
+            <a style="margin-top: -60px;" class="btn btn-success" href="#/InvoiceDetail/0">Add Invoice</a>
+        </span>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Invoice Date</th>
+                <th>Customer Name</th>
+                <th>Invoice Total</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="invoice in Invoices">
+                <!--Format date using momentjs filter-->
+                <td>{{invoice.InvoiceDate | moment:'MM/DD/YYYY'}}</td>
+                
+
+                <td>{{invoice.CustomerName}}</td>
+                <td>{{getLineItemsTotals(invoice) | currency:'$'}}</td>
+
+                <td>
+                    <span class="pull-right">
+                        <a class="btn btn-success" data-ng-href="#/InvoiceDetail/{{invoice.Id}}">Edit</a>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success" ng-click="deleteInvoice(invoice.Id)">Delete</button>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
