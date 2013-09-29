@@ -184,11 +184,11 @@
     <Content Include="Scripts\angularjs\lib\angular.js" />
     <Content Include="Scripts\angularjs\lib\angular.min.js" />
     <Content Include="Scripts\angularjs\test\scripts\web-server.js" />
-    <Content Include="Scripts\angularjs\test\unit-ignore\controllersSpec.js" />
+    <Content Include="Scripts\angularjs\test\unit-SampleFromSeed\controllersSpec.js" />
     <Content Include="Scripts\angularjs\test\unit\invoiceControllerSpec.js" />
-    <Content Include="Scripts\angularjs\test\unit-ignore\directivesSpec.js" />
-    <Content Include="Scripts\angularjs\test\unit-ignore\filtersSpec.js" />
-    <Content Include="Scripts\angularjs\test\unit-ignore\servicesSpec.js" />
+    <Content Include="Scripts\angularjs\test\unit-SampleFromSeed\directivesSpec.js" />
+    <Content Include="Scripts\angularjs\test\unit-SampleFromSeed\filtersSpec.js" />
+    <Content Include="Scripts\angularjs\test\unit-SampleFromSeed\servicesSpec.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
