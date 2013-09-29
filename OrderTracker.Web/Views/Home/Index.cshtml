@@ -20,7 +20,7 @@
         @foreach (var invoice in Model)
         {
             <tr>
-                <td>@invoice.InvoiceDate.ToShortDateString()</td>
+                <td>@invoice.InvoiceDate.Value.ToShortDateString()</td>
                 <td>@invoice.CustomerName</td>
                 <td>@invoice.LineItems.Sum(_ => _.Quantity * _.Rate).ToString("C")</td>
                 <td>

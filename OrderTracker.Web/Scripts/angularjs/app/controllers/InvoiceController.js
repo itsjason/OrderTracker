@@ -1,19 +1,9 @@
 ﻿angular.module('orderTrackerApp')
-    .controller("InvoiceCtrl", function ($scope, $window, invoiceProcessor) {
+    .controller("InvoiceCtrl", function ($scope, $window, invoiceSvc) {
 
-        $scope.apiBaseUrl = '/api/Invoices';
+        $scope.Invoices = invoiceSvc.resource.query();
 
-
-        $scope.Invoices = invoiceProcessor.getInvoices($scope.apiBaseUrl);
-        $scope.Invoices.then(
-            function(output) {
-            },
-            function(response) {
-            }
-        );
-
-
-        $scope.getLineItemsTotals = function(invoice) {
+        $scope.getLineItemsTotals = function (invoice) {
 
             var total = 0;
 
@@ -24,13 +14,10 @@
             return total;
         };
 
-        $scope.editInvoice = function(invoice) {
-            invoiceProcessor.editInvoice(invoice, $scope.apiBaseUrl + "Put");
-        };
-
-        $scope.deleteInvoice = function(id) {
-            invoiceProcessor.deleteInvoice(id, $scope.apiBaseUrl);
-
+        $scope.deleteInvoice = function (invoice) {
+            invoice.$remove(function () {
+                // Remove the invoice from the in memory collection
+                $scope.Invoices.splice($scope.Invoices.indexOf(invoice), 1);
+            });
         };
     });
-    

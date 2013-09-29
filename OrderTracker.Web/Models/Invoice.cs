@@ -16,7 +16,7 @@ namespace OrderTracker.Web.Models
 
         [DisplayName("Invoice Date")] 
         [DataType(DataType.Date)]
-        public DateTime InvoiceDate { get; set; }
+        public DateTime? InvoiceDate { get; set; }
 
         [DisplayName("Customer Name")]
         public string CustomerName { get; set; }    

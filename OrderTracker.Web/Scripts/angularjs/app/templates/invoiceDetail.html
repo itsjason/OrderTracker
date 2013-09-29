@@ -9,22 +9,22 @@
 
     <div class="alert alert-info " id="notificationMessage" style="display: none"></div>
 
-    <form class="form-horizontal">
+    <form name="InvoiceHeader" class="form-horizontal">
         <div class="form-group">
             <label for="CustomerName" class="col-lg-2 control-label">Customer Name</label>
             <div class="col-lg-10">
-                <input type="text" class="form-control" id="CustomerName" ng-model="InvoiceDetail.CustomerName" />
+                <input name="CustomerName" type="text" class="form-control" id="CustomerName" ng-model="Invoice.CustomerName" ng-required="true" ng-class="{'has-error': Invoice.CustomerName.$invalid }" />
             </div>
         </div>
         <div class="form-group">
             <label for="InvoiceDate" class="col-lg-2 control-label">Invoice Date</label>
             <div class="col-lg-10">
-                <input type="text" class="form-control" id="InvoiceDate" ng-model="InvoiceDetail.InvoiceDate" placeholder="MM/DD/YYYY" />
+                <input name="InvoiceDate" type="text" class="form-control" id="InvoiceDate" ng-model="Invoice.InvoiceDate" placeholder="MM/DD/YYYY" ng-required="true" ng-class="{'has-error': Invoice.InvoiceDate.$invalid }"/>
             </div>
         </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-                <button type="button" class="btn btn-success" ng-click="addInvoice(InvoiceDetail)">Save</button>
+                <button type="button" class="btn btn-success" ng-click="saveInvoice(Invoice)" ng-disabled="InvoiceHeader.$invalid">Save</button>
             </div>
         </div>
     </form>
@@ -41,33 +41,34 @@
             </thead>
             <tbody>
 
-                <tr ng-repeat="lineItem in InvoiceDetail.LineItems">
+                <tr ng-repeat="lineItem in LineItems">
                     <td>
-                        <input type="text" ng-model="lineItem.Task" /></td>
+                        <input type="text" ng-model="lineItem.Task" ng-required="true" /></td>
                     <td>
-                        <input type="text" ng-model="lineItem.Rate" /></td>
+                        <input type="text" ng-model="lineItem.Rate" ng-required="true" ng-pattern="/^\d*$/" /></td>
                     <td>
-                        <input type="text" ng-model="lineItem.Quantity" /></td>
+                        <input type="text" ng-model="lineItem.Quantity" ng-required="true" ng-pattern="/^\d*$/" /></td>
                     <td><span>{{ (lineItem.Rate * lineItem.Quantity) | currency:'$'}}</span></td>
                     <td>
                         <span class="pull-right">
-                            <button type="button" class="btn btn-success" ng-click="editLineItem(InvoiceDetail.Id, lineItem)">Update</button>&nbsp;&nbsp;
-                            <button type="button" class="btn btn-success" ng-click="deleteLineItem(InvoiceDetail.Id, lineItem.Id)">Delete</button>
+                            <button type="button" class="btn btn-success" ng-click="updateLineItem(lineItem)">Update</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-success" ng-click="deleteLineItem(lineItem)">Delete</button>
                         </span>
                     </td>
                 </tr>
 
+
                 <tr>
                     <td>
-                        <input type="text" id="Task_Add" ng-model="lineItem.Task" /></td>
+                        <input class="span4" type="text" id="Task_Add" ng-model="lineItem.Task" ng-required="true" /></td>
                     <td>
-                        <input type="text" id="Rate_Add" class="rate" ng-model="lineItem.Rate" /></td>
+                        <input name="rate" type="text" id="Rate_Add" class="rate" ng-model="lineItem.Rate" ng-required="true" ng-pattern="/^\d*$/" /></td>
                     <td>
-                        <input type="text" id="Quantity_Add" class="quantity" ng-model="lineItem.Quantity" /></td>
+                        <input type="text" id="Quantity_Add" class="quantity" ng-model="lineItem.Quantity" ng-required="true" ng-pattern="/^\d*$/" /></td>
                     <td><span id="LineTotal_Add">{{ (lineItem.Rate * lineItem.Quantity) | currency:'$'}}</span></td>
                     <td>
                         <span class="pull-right">
-                            <button type="button" class="btn btn-success" ng-click="addLineItem(invoiceId,lineItem)">Add</button>
+                            <button type="button" class="btn btn-success" ng-click="addLineItem(lineItem)">Add</button>
                         </span>
                     </td>
                 </tr>

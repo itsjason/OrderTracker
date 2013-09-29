@@ -158,6 +158,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\angularjs\app\filters\moment.js" />
+    <Content Include="Scripts\angularjs\app\services\InvoiceDetailsService.js" />
     <Content Include="Scripts\angularjs\app\templates\invoiceDetail.html" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\accounting.js" />
@@ -165,8 +166,10 @@
     <Content Include="Scripts\angularjs\app\app.js" />
     <Content Include="Scripts\angularjs\app\controllers\InvoiceController.js" />
     <Content Include="Scripts\angularjs\app\controllers\InvoiceDetailsController.js" />
-    <Content Include="Scripts\angularjs\app\services\InvoiceProcessor.js" />
+    <Content Include="Scripts\angularjs\app\services\InvoiceService.js" />
+    <Content Include="Scripts\angularjs\lib\angular-resource.js" />
     <Content Include="Scripts\angularjs\lib\angular-resource.min.js" />
+    <Content Include="Scripts\angularjs\lib\angular.js" />
     <Content Include="Scripts\angularjs\lib\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

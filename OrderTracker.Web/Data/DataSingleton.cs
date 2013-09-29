@@ -18,7 +18,7 @@ namespace OrderTracker.Web.Data
         }
 
         public static Invoice AddInvoice(Invoice invoiceToAdd)
-        {            
+        {
             lock (Lock)
             {
                 var id = GetNextInvoiceId();
@@ -30,7 +30,7 @@ namespace OrderTracker.Web.Data
         }
 
         public static LineItem AddLineItem(LineItem lineItem)
-        {            
+        {
             lock (Lock)
             {
                 var id = GetNextLineItemId();
@@ -47,7 +47,7 @@ namespace OrderTracker.Web.Data
         {
             lock (Lock)
             {
-                var invoiceIndex = Invoices.FindIndex(_ => _.Id == id);                
+                var invoiceIndex = Invoices.FindIndex(_ => _.Id == id);
 
                 Invoices.RemoveAt(invoiceIndex);
             }
@@ -105,7 +105,13 @@ namespace OrderTracker.Web.Data
 
         public static IList<LineItem> GetLineItemsByInvoice(int invoiceId)
         {
-            return Invoices.First(_ => _.Id == invoiceId).LineItems;
+            Invoice invoice = Invoices.FirstOrDefault(_ => _.Id == invoiceId);
+            if (invoice != null)
+            {
+                return invoice.LineItems;
+            }
+
+            return new List<LineItem>();
         }
 
         private static int GetNextInvoiceId()
@@ -115,8 +121,8 @@ namespace OrderTracker.Web.Data
 
         private static int GetNextLineItemId()
         {
-            return Invoices.Select(invoice => !invoice.LineItems.Any() ? 0: invoice.LineItems.Max(_ => _.Id)).Concat(new[] { 0 }).Max() + 1;
-        }       
+            return Invoices.Select(invoice => !invoice.LineItems.Any() ? 0 : invoice.LineItems.Max(_ => _.Id)).Concat(new[] { 0 }).Max() + 1;
+        }
 
         private static List<Invoice> GetSeedData()
         {
@@ -129,9 +135,9 @@ namespace OrderTracker.Web.Data
                     InvoiceDate = DateTime.Now.AddDays(-10),
                     LineItems = new List<LineItem>
                     {
-                        new LineItem { Id = 1, InvoiceId = 1, Quantity = 2, Rate = 500, Task = "CHL" },
-                        new LineItem { Id = 2, InvoiceId = 1, Quantity = 1, Rate = 10, Task = "ABF" },
-                        new LineItem { Id = 3, InvoiceId = 1, Quantity = 10, Rate = 250, Task = "AgDirect" },
+                        new LineItem { Id = 1, InvoiceId = 1, Quantity = 2, Rate = 500m, Task = "CHL" },
+                        new LineItem { Id = 2, InvoiceId = 1, Quantity = 1, Rate = 10m, Task = "ABF" },
+                        new LineItem { Id = 3, InvoiceId = 1, Quantity = 10, Rate = 250m, Task = "AgDirect" },
                     }
                 },
                 new Invoice
@@ -141,8 +147,8 @@ namespace OrderTracker.Web.Data
                     InvoiceDate = DateTime.Now.AddDays(-5),
                     LineItems = new List<LineItem>
                     {
-                        new LineItem { Id = 4, InvoiceId = 2, Quantity = 1, Rate = 3000, Task = "Bike" },
-                        new LineItem { Id = 5, InvoiceId = 2, Quantity = 2, Rate = 120, Task = "Helmet" },                        
+                        new LineItem { Id = 4, InvoiceId = 2, Quantity = 1, Rate = 3000m, Task = "Bike" },
+                        new LineItem { Id = 5, InvoiceId = 2, Quantity = 2, Rate = 120m, Task = "Helmet" },                        
                     }
                 },
                 new Invoice
@@ -152,9 +158,9 @@ namespace OrderTracker.Web.Data
                     InvoiceDate = DateTime.Now.AddDays(-1),
                     LineItems = new List<LineItem>
                     {
-                        new LineItem { Id = 6, InvoiceId = 3, Quantity = 2, Rate = 6000, Task = "PowerMac" },
-                        new LineItem { Id = 7, InvoiceId = 3, Quantity = 5, Rate = 800, Task = "iPhone 5" },                        
-                        new LineItem { Id = 8, InvoiceId = 3, Quantity = 3, Rate = 3000, Task = "MacBook Pro Retina" },                        
+                        new LineItem { Id = 6, InvoiceId = 3, Quantity = 2, Rate = 6000m, Task = "PowerMac" },
+                        new LineItem { Id = 7, InvoiceId = 3, Quantity = 5, Rate = 800m, Task = "iPhone 5" },                        
+                        new LineItem { Id = 8, InvoiceId = 3, Quantity = 3, Rate = 3000m, Task = "MacBook Pro Retina" },                        
                     }
                 },
                 new Invoice
@@ -164,8 +170,8 @@ namespace OrderTracker.Web.Data
                     InvoiceDate = DateTime.Now.AddDays(-1),
                     LineItems = new List<LineItem>
                     {
-                        new LineItem { Id = 9, InvoiceId = 4, Quantity = 30, Rate = 50, Task = "Grass Seed" },
-                        new LineItem { Id = 10, InvoiceId = 4, Quantity = 5, Rate = 20, Task = "Sprinklers" }                                                                        
+                        new LineItem { Id = 9, InvoiceId = 4, Quantity = 30, Rate = 50m, Task = "Grass Seed" },
+                        new LineItem { Id = 10, InvoiceId = 4, Quantity = 5, Rate = 20m, Task = "Sprinklers" }                                                                        
                     }
                 },
             };

@@ -14,7 +14,7 @@ namespace OrderTracker.Web.Models
 
         [DisplayName("Rate")]
         [DataType(DataType.Currency)]
-        public double Rate { get; set; }
+        public decimal Rate { get; set; }
 
         [DisplayName("Quantity")]
         public int Quantity { get; set; }
