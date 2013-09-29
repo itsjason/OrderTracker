@@ -1,5 +1,5 @@
 ﻿angular.module('orderTrackerApp')
-    .controller("InvoiceCtrl", function ($scope, $window, invoiceSvc) {
+    .controller("InvoiceCtrl", function ($scope, invoiceSvc) {
 
         $scope.Invoices = invoiceSvc.resource.query();
 
