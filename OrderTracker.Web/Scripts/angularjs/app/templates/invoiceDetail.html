@@ -7,7 +7,7 @@
         </span>
     </div>
 
-    <div class="alert alert-info " id="notificationMessage" style="display: none"></div>
+    <div ng-notifier="InvoiceDetailUpdateNotification"></div>
 
     <form name="InvoiceHeader" class="form-horizontal">
         <div class="form-group">
@@ -78,9 +78,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-
-    <div class="alert alert-info " style="margin-top: 40px">
-        <span>{{InvoiceDetailUpdateNotification}}</span>
     </div>
 </div>

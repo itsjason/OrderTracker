@@ -2,6 +2,7 @@
     .controller("InvoiceCtrl", function ($scope, invoiceSvc) {
 
         $scope.Invoices = invoiceSvc.resource.query();
+        $scope.InvoiceUpdateNotification = '';
 
         $scope.getLineItemsTotals = function (invoice) {
 
@@ -18,6 +19,7 @@
             invoice.$remove(function () {
                 // Remove the invoice from the in memory collection
                 $scope.Invoices.splice($scope.Invoices.indexOf(invoice), 1);
+                $scope.InvoiceUpdateNotification = 'Invoice Successfully Deleted';
             });
         };
     });
