@@ -1,20 +1,26 @@
-basePath = '../../';
 
-files = [
-  JASMINE,
-  JASMINE_ADAPTER,
-  'lib/angular.min.js',
-  'lib/angular-*.js',
-  'test/lib/angular/angular-mocks.js',
-  'app/**/*.js',
-  'test/unit/**/*.js'
-];
+module.exports = function (config) {
+    config.set({
+        basePath: '../../',
 
-autoWatch = true;
+        frameworks: ["jasmine"],
 
-browsers = ['Chrome'];
+        files: [
+            'lib/angular.min.js',
+            'lib/angular-*.js',
+            'test/lib/angular/angular-mocks.js',
+            'app/**/*.js',
+            'test/unit/**/*.js'
+        ],
 
-junitReporter = {
-  outputFile: 'test_out/unit.xml',
-  suite: 'unit'
+        autoWatch: true,
+
+        browsers: ['Chrome'],
+
+        junitReporter: {
+            outputFile: 'test_out/unit.xml',
+            suite: 'unit'
+        }
+
+    });
 };
