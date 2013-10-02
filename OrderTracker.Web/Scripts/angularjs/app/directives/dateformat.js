@@ -20,7 +20,9 @@
                 // To be added back into the model
 
                 if (viewValue) {
-                    viewValue = $filter('moment')(viewValue, 'MM/DD/YYYY');
+                    var testValue = moment(viewValue, 'MM/DD/YYYY');
+
+                    ctrl.$setValidity('ngDateFormat', testValue.isValid());                           
                 }
 
                 return viewValue;
