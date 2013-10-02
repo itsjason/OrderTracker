@@ -157,6 +157,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\angularjs\app\directives\dateformat.js" />
     <Content Include="Scripts\angularjs\app\directives\notifier.js" />
     <Content Include="Scripts\angularjs\app\filters\moment.js" />
     <Content Include="Scripts\angularjs\app\services\InvoiceDetailsService.js" />
