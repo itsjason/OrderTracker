@@ -9,16 +9,5 @@ namespace OrderTracker.Web.Controllers
         {
             return View();
         }
-
-        public ActionResult InvoiceDetail(int id)
-        {
-            return View();
-        }
-
-        public ActionResult AddInvoice()
-        {
-            return View("InvoiceDetail");
-        }
-
     }
 }

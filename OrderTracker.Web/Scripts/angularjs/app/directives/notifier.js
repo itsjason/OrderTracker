@@ -1,10 +1,10 @@
 ﻿angular.module('orderTrackerApp')
-    .directive('ngNotifier', function () {
+    .directive('fcsaNotifier', function () {
         return {
             replace: true,
             templateUrl: "../scripts/angularjs/app/templates/notifier.html",
             scope: {                
-                notifyText: "=ngNotifier"      
+                notifyText: "=fcsaNotifier"      
             }
         };
     });

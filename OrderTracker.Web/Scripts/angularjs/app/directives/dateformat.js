@@ -1,5 +1,5 @@
 ﻿angular.module('orderTrackerApp')
-.directive('ngDateFormat', function ($filter) {
+.directive('fcsaDateFormat', function ($filter) {
 
     return {
         require: 'ngModel',
@@ -22,7 +22,7 @@
                 if (viewValue) {
                     var testValue = moment(viewValue, 'MM/DD/YYYY');
 
-                    ctrl.$setValidity('ngDateFormat', testValue.isValid());                           
+                    ctrl.$setValidity('fcsaDateFormat', testValue.isValid());
                 }
 
                 return viewValue;
