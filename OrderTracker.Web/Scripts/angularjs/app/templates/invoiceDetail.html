@@ -8,27 +8,52 @@
     </div>
 
     <div fcsa-notifier="InvoiceDetailUpdateNotification"></div>
-
+    
+    <!-- The form is given the name InvoiceHeader.  
+        This allows the form to be referenced by validation code. -->
     <form name="InvoiceHeader" class="form-horizontal">
+        
         <div class="form-group">
             <label for="CustomerName" class="col-lg-2 control-label">Customer Name</label>
             <div class="col-lg-10">
-                <input name="CustomerName" type="text" class="form-control" id="CustomerName" ng-model="Invoice.CustomerName" ng-required="true" ng-class="{'has-error': Invoice.CustomerName.$invalid }" />
+
+                <!-- ng-model is for two way binding between the input box and $scope.Invoice.CustomerName 
+                    ng-required marks the input box as required.  This is picked up by field and form validation.
+                    ng-class dynamically set the bootstrap 'has-error' class if CustomerName is invalid.
+                    -->
+                <input name="CustomerName" type="text" class="form-control" id="CustomerName"
+                       ng-model="Invoice.CustomerName"
+                       ng-required="true"
+                       ng-class="{'has-error': Invoice.CustomerName.$invalid }" />
+
             </div>
         </div>
         <div class="form-group">
             <label for="InvoiceDate" class="col-lg-2 control-label">Invoice Date</label>
             <div class="col-lg-10">
-                <input name="InvoiceDate" type="text" class="form-control" id="InvoiceDate" ng-model="Invoice.InvoiceDate" placeholder="MM/DD/YYYY" fcsa-date-format ng-required="true" ng-class="{'has-error': Invoice.InvoiceDate.$invalid }"/>
+
+                <!-- fcsa-date-format is a custom directive to apply date formatting and translation for this input. -->
+                <input name="InvoiceDate" type="text" class="form-control" id="InvoiceDate" ng-model="Invoice.InvoiceDate" placeholder="MM/DD/YYYY"
+                       fcsa-date-format ng-required="true" ng-class="{'has-error': Invoice.InvoiceDate.$invalid }" />
+
             </div>
         </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-                <button type="button" class="btn btn-success" ng-click="saveInvoice(Invoice)" ng-disabled="InvoiceHeader.$invalid">Save</button>
+
+                <!-- ng-disabled will turn on or off the disabled attributed based in the validity of the InvoiceHeader form. -->
+                <button type="button" class="btn btn-success"
+                        ng-click="saveInvoice(Invoice)" 
+                        ng-disabled="InvoiceHeader.$invalid">Save</button>
+
             </div>
         </div>
     </form>
+    
+    <!-- ng-show allows you to hide an html element based on an expression.  
+        We hide the div contents if its a new invoice, invoiceId = 0.  -->
     <div ng-show="invoiceId>0">
+        
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -45,7 +70,11 @@
                     <td>
                         <input type="text" ng-model="lineItem.Task" ng-required="true" /></td>
                     <td>
-                        <input type="text" ng-model="lineItem.Rate" ng-required="true" ng-pattern="/^\d*$/" /></td>
+                    
+                        <!-- ng-pattern allows you to validate the contents of a field using a regular expression. -->
+                        <input type="text" ng-model="lineItem.Rate" ng-required="true" ng-pattern="/^\d*$/" />
+                    
+                    </td>
                     <td>
                         <input type="text" ng-model="lineItem.Quantity" ng-required="true" ng-pattern="/^\d*$/" /></td>
                     <td><span>{{ (lineItem.Rate * lineItem.Quantity) | currency:'$'}}</span></td>

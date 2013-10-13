@@ -3,10 +3,14 @@
     <div class="page-header">
         <h1>Invoices</h1>
         <span class="pull-right">
+
+            <!-- # signals Angular's SPA routing.  InvoiceDetail is the route and 0 is part of $routeParam -->
             <a style="margin-top: -60px;" class="btn btn-success" href="#/InvoiceDetail/0">Add Invoice</a>
+
         </span>
     </div>
-    
+
+    <!-- fcsa-notifier is a custom directive that wraps up notification area capabilities -->
     <div fcsa-notifier="InvoiceUpdateNotification"></div>
 
     <table class="table table-striped">
@@ -19,18 +23,36 @@
             </tr>
         </thead>
         <tbody>
+
+            <!-- ng-repeat is for repeating HTML elements over 
+                a collection.  The resulting list can be filtered or sorted -->
             <tr ng-repeat="invoice in Invoices">
-                <!--Format date using momentjs filter-->
+
+                <!-- one way binding to $scope.invoice.InvoiceDate and 
+                    then pipe it into a date formatter using a momentjs filter -->
                 <td>{{invoice.InvoiceDate | moment:'MM/DD/YYYY'}}</td>
-                
 
                 <td>{{invoice.CustomerName}}</td>
+
+                <!-- one way binding to the function $scope.getLineItemsTotals 
+                    with a parameter of invoice (the ng-repeat iterator).
+                    Pass the result of the function to a currency formatter. -->
                 <td>{{getLineItemsTotals(invoice) | currency:'$'}}</td>
 
                 <td>
                     <span class="pull-right">
+                        
+                        <!-- data-ng-href same as ng-href this is an alternate syntax to href="{{...}}"
+                            The difference between using href and ng-href is a matter of timing.  
+                            The result of the timing is more apparent with an img src tag.  
+                            If you use src={{variable}} the img tag will show an invalid picture for a short time.
+                            ng-src will only set the src tag once it has been calculated to the actual value.  -->
                         <a class="btn btn-success" data-ng-href="#/InvoiceDetail/{{invoice.Id}}">Edit</a>&nbsp;&nbsp;
-                        <button type="button" class="btn btn-success" ng-click="deleteInvoice(invoice)">Delete</button>
+                        
+                        <!-- ng-click executes the $scope.deleteInvoice function -->
+                        <button type="button" class="btn btn-success" 
+                                ng-click="deleteInvoice(invoice)">Delete</button>
+
                     </span>
                 </td>
             </tr>
