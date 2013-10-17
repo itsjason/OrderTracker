@@ -3,57 +3,61 @@
     <div class="page-header">
         <h1>Invoice Details</h1>
         <span class="pull-right">
-            <a class="btn btn-primary" style="margin-top: -60px;" href="#">Return To Invoice List</a>
+            <a class="btn btn-primary" style="margin-top: -60px;" href="#/">Return To Invoice List</a>
         </span>
     </div>
 
     <div fcsa-notifier="InvoiceDetailUpdateNotification"></div>
-    
-    <!-- The form is given the name InvoiceHeader.  
+
+    <!-- The form is given a name.  
         This allows the form to be referenced by validation code. -->
-    <form name="InvoiceHeader" class="form-horizontal">
+    <form name="InvoiceForm" class="form-horizontal">
         
-        <div class="form-group">
+        <!-- ng-class - dynamically set the bootstrap 'has-error' class if CustomerName is invalid. -->
+        <div class="form-group" ng-class="{'has-error': InvoiceForm.CustomerName.$invalid }">
             <label for="CustomerName" class="col-lg-2 control-label">Customer Name</label>
             <div class="col-lg-10">
 
                 <!-- ng-model is for two way binding between the input box and $scope.Invoice.CustomerName 
-                    ng-required marks the input box as required.  This is picked up by field and form validation.
-                    ng-class dynamically set the bootstrap 'has-error' class if CustomerName is invalid.
-                    -->
+
+                    ng-required marks the input box as required.  This is picked up by field and form validation.-->
                 <input name="CustomerName" type="text" class="form-control" id="CustomerName"
-                       ng-model="Invoice.CustomerName"
-                       ng-required="true"
-                       ng-class="{'has-error': Invoice.CustomerName.$invalid }" />
+                    ng-model="Invoice.CustomerName"
+                    ng-required="true" />
 
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error': InvoiceForm.InvoiceDate.$invalid }">
             <label for="InvoiceDate" class="col-lg-2 control-label">Invoice Date</label>
             <div class="col-lg-10">
 
-                <!-- fcsa-date-format is a custom directive to apply date formatting and translation for this input. -->
-                <input name="InvoiceDate" type="text" class="form-control" id="InvoiceDate" ng-model="Invoice.InvoiceDate" placeholder="MM/DD/YYYY"
-                       fcsa-date-format ng-required="true" ng-class="{'has-error': Invoice.InvoiceDate.$invalid }" />
+                <!-- fcsa-date-format is a custom directive to apply date 
+                    formatting and translation for this input. -->
+                <input name="InvoiceDate" type="text" class="form-control"
+                    id="InvoiceDate" ng-model="Invoice.InvoiceDate"
+                    placeholder="MM/DD/YYYY" fcsa-date-format ng-required="true" />
 
             </div>
         </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
 
-                <!-- ng-disabled will turn on or off the disabled attributed based in the validity of the InvoiceHeader form. -->
+                <!-- ng-disabled will turn on or off the disabled attributed based on 
+                    the validity of the InvoiceForm. -->
                 <button type="button" class="btn btn-success"
-                        ng-click="saveInvoice(Invoice)" 
-                        ng-disabled="InvoiceHeader.$invalid">Save</button>
+                    ng-click="saveInvoice(Invoice)"
+                    ng-disabled="InvoiceForm.$invalid">
+                    Save</button>
 
             </div>
         </div>
     </form>
-    
+
     <!-- ng-show allows you to hide an html element based on an expression.  
-        We hide the div contents if its a new invoice, invoiceId = 0.  -->
+        We hide the div contents if its a new invoice, invoiceId = 0.
+        This could be a function if you want to unit test ng-show.  -->
     <div ng-show="invoiceId>0">
-        
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -68,15 +72,20 @@
 
                 <tr ng-repeat="lineItem in LineItems">
                     <td>
-                        <input type="text" ng-model="lineItem.Task" ng-required="true" /></td>
+                        <input name="Task" class="form-control" type="text" 
+                            ng-model="lineItem.Task" ng-required="true" /></td>
                     <td>
-                    
+
                         <!-- ng-pattern allows you to validate the contents of a field using a regular expression. -->
-                        <input type="text" ng-model="lineItem.Rate" ng-required="true" ng-pattern="/^\d*$/" />
-                    
+                        <input class="form-control " type="text" ng-model="lineItem.Rate" 
+                            ng-required="true" ng-pattern="/^\d*$/" />
+
                     </td>
                     <td>
-                        <input type="text" ng-model="lineItem.Quantity" ng-required="true" ng-pattern="/^\d*$/" /></td>
+                        <input class="form-control " type="text" ng-model="lineItem.Quantity" ng-required="true" ng-pattern="/^\d*$/" /></td>
+
+                    <!-- Expressions can contain simple math operations.
+                        Conditional logic should be in your controller for testing. -->
                     <td><span>{{ (lineItem.Rate * lineItem.Quantity) | currency:'$'}}</span></td>
                     <td>
                         <span class="pull-right">
@@ -86,14 +95,13 @@
                     </td>
                 </tr>
 
-
                 <tr>
                     <td>
-                        <input class="span4" type="text" id="Task_Add" ng-model="lineItem.Task" ng-required="true" /></td>
+                        <input class="form-control" type="text" id="Task_Add" ng-model="lineItem.Task" ng-required="true" /></td>
                     <td>
-                        <input name="rate" type="text" id="Rate_Add" class="rate" ng-model="lineItem.Rate" ng-required="true" ng-pattern="/^\d*$/" /></td>
+                        <input class="form-control " name="rate" type="text" id="Rate_Add" class="rate" ng-model="lineItem.Rate" ng-required="true" ng-pattern="/^\d*$/" /></td>
                     <td>
-                        <input type="text" id="Quantity_Add" class="quantity" ng-model="lineItem.Quantity" ng-required="true" ng-pattern="/^\d*$/" /></td>
+                        <input class="form-control " type="text" id="Quantity_Add" class="quantity" ng-model="lineItem.Quantity" ng-required="true" ng-pattern="/^\d*$/" /></td>
                     <td><span id="LineTotal_Add">{{ (lineItem.Rate * lineItem.Quantity) | currency:'$'}}</span></td>
                     <td>
                         <span class="pull-right">
@@ -103,6 +111,8 @@
                 </tr>
                 <tr>
                     <td colspan="3"><span class="pull-right" style="font-weight: bold">Invoice Total:</span></td>
+
+                    <!-- Call function to accumulate totals across invoice lines. -->
                     <td colspan="2"><span id="InvoiceTotal">{{getLineItemsTotals() | currency:'$'}}</span></td>
                 </tr>
             </tbody>
