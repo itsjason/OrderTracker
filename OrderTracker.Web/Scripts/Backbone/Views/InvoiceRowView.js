@@ -12,6 +12,6 @@
   },
   
   editClicked: function () {
-    App.trigger('navigate', 'Invoice/' + this.model.id);
+    App.trigger('navigate', 'Invoices/' + this.model.id);
   }
 });

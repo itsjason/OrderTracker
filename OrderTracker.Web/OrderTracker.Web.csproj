@@ -201,6 +201,7 @@
     <Content Include="Scripts\Backbone\Views\InvoiceCollectionView.js" />
     <Content Include="Scripts\Backbone\Views\InvoiceDetailView.js" />
     <Content Include="Scripts\Backbone\Views\InvoiceRowView.js" />
+    <Content Include="Scripts\Backbone\Views\LineItemView.js" />
     <Content Include="Scripts\Vendor\bootstrap.min.js" />
     <Content Include="Scripts\Vendor\jquery-1.9.1.min.js" />
     <Content Include="Scripts\PlainMVC\PlainMvcFunctions.js" />

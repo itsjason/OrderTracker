@@ -17,7 +17,7 @@ App.Router = Backbone.Router.extend({
   
   routes: {
     '': 'index',
-    'Invoice/:id': 'invoice',
+    'Invoices/:id': 'invoice',
   },
 
   index: function () {
@@ -25,7 +25,7 @@ App.Router = Backbone.Router.extend({
     this.showView(view);
   },
 
-  invoice: function(id) {
+  invoice: function (id) {
     var invoice = this.invoices.get(id);
     var view = new App.views.InvoiceDetailView({ model: invoice });
     this.showView(view);

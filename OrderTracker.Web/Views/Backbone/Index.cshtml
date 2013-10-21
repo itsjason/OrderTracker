@@ -14,10 +14,11 @@
     <script src="~/Scripts/Backbone/Views/InvoiceCollectionView.js"></script>
     <script src="~/Scripts/Backbone/Views/InvoiceRowView.js"></script>
     <script src="~/Scripts/Backbone/Views/InvoiceDetailView.js"></script>
+    <script src="~/Scripts/Backbone/Views/LineItemView.js"></script>
     <script>
         (function() {
             router = new App.Router(); 
-            console.log(Backbone.history.start({ pushState: true, root: '/Backbone' }));
+            Backbone.history.start({ pushState: true, root: '/Backbone' });
         }).call(this);
     </script>
 }
@@ -47,7 +48,7 @@
 <script id="invoice-row-template" type="text/template">
     <td><%= moment(InvoiceDate).format('MM/DD/YYYY') %></td>
     <td><%= CustomerName %></td>
-    <td><%= numeral(Total).format('$0,0') %></td>
+    <td><%= numeral(InvoiceTotal).format('$0,0') %></td>
     <td>
         <span class="pull-right">
             <button type="button" class="btn btn-success edit">Edit</button>&nbsp;&nbsp;
@@ -81,7 +82,7 @@
         </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-                <button type="button" class="btn btn-success">Save</button>
+                <button id="save-invoice" type="button" class="btn btn-success">Save</button>
             </div>
         </div>
     </form>
@@ -99,17 +100,17 @@
         <tbody>
             <tr>                
                 <td colspan="3"><span class="pull-right" style="font-weight: bold">Invoice Total:</span></td>
-                <td colspan="2"><span id="InvoiceTotal"><%= numeral(Total).format('$0,0') %></span></td>                
+                <td colspan="2"><span id="InvoiceTotal"><%= numeral(InvoiceTotal).format('$0,0') %></span></td>                
             </tr>
         </tbody>
     </table>
 </script>
 
 <script id="line-item-template" type="text/template">
-    <td><input type="text" value="<%= Task %>"/></td>
-    <td><input type="text" value="<%= Rate %>"/></td>
-    <td><input type="text" value="<%= Quantity %>"/></td>
-    <td><span><%= Total %></span></td>
+    <td><input type="text" name="Task" value="<%= Task %>"/></td>
+    <td><input type="text" name="Rate" value="<%= Rate %>"/></td>
+    <td><input type="text" name="Quantity" value="<%= Quantity %>"/></td>
+    <td><span class="Total"><%= numeral(Total).format('$0,0') %></span></td>
     <td>
         <span class="pull-right">
             <button type="button" class="btn btn-success">Update</button>&nbsp;&nbsp;

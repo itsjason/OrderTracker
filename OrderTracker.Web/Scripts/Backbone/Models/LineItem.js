@@ -1,6 +1,7 @@
 ﻿App.models.LineItem = Backbone.Model.extend({
   initialize: function (atts, options) {
     this.calculateTotal();
+    this.on('change:Rate change:Quantity', this.calculateTotal);
   },
 
   calculateTotal: function() {
