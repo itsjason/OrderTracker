@@ -13,8 +13,8 @@
         This allows the form to be referenced by validation code. -->
     <form name="InvoiceForm" class="form-horizontal">
         
-        <!-- ng-class - dynamically set the bootstrap 'has-error' class if CustomerName is invalid. -->
-        <div class="form-group" ng-class="{'has-error': InvoiceForm.CustomerName.$invalid }">
+        <!-- ng-class - dynamically set the bootstrap 'has-error' class if CustomerName is invalid and changed. -->
+        <div class="form-group" ng-class="{'has-error': InvoiceForm.CustomerName.$invalid && InvoiceForm.CustomerName.$dirty }">
             <label for="CustomerName" class="col-lg-2 control-label">Customer Name</label>
             <div class="col-lg-10">
 
@@ -27,7 +27,7 @@
 
             </div>
         </div>
-        <div class="form-group" ng-class="{'has-error': InvoiceForm.InvoiceDate.$invalid }">
+        <div class="form-group" ng-class="{'has-error': InvoiceForm.InvoiceDate.$invalid && InvoiceForm.InvoiceDate.$dirty }">
             <label for="InvoiceDate" class="col-lg-2 control-label">Invoice Date</label>
             <div class="col-lg-10">
 
@@ -69,8 +69,9 @@
                 </tr>
             </thead>
             <tbody>
-
-                <tr ng-repeat="lineItem in LineItems">
+                
+                <!-- ng-form creates a row level virtual form for validation purposes.  -->
+                <tr ng-repeat="lineItem in LineItems" ng-form="LineItemForm">
                     <td>
                         <input name="Task" class="form-control" type="text" 
                             ng-model="lineItem.Task" ng-required="true" /></td>
@@ -89,13 +90,13 @@
                     <td><span>{{ (lineItem.Rate * lineItem.Quantity) | currency:'$'}}</span></td>
                     <td>
                         <span class="pull-right">
-                            <button type="button" class="btn btn-success" ng-click="updateLineItem(lineItem)">Update</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-success" ng-click="updateLineItem(lineItem)" ng-disabled="LineItemForm.$invalid">Update</button>&nbsp;&nbsp;
                             <button type="button" class="btn btn-success" ng-click="deleteLineItem(lineItem)">Delete</button>
                         </span>
                     </td>
                 </tr>
 
-                <tr>
+                <tr ng-form="LineItemForm">
                     <td>
                         <input class="form-control" type="text" id="Task_Add" ng-model="lineItem.Task" ng-required="true" /></td>
                     <td>
@@ -105,7 +106,7 @@
                     <td><span id="LineTotal_Add">{{ (lineItem.Rate * lineItem.Quantity) | currency:'$'}}</span></td>
                     <td>
                         <span class="pull-right">
-                            <button type="button" class="btn btn-success" ng-click="addLineItem(lineItem)">Add</button>
+                            <button type="button" class="btn btn-success" ng-click="addLineItem(lineItem)" ng-disabled="LineItemForm.$invalid">Add</button>
                         </span>
                     </td>
                 </tr>
